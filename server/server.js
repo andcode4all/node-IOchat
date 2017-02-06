@@ -3,6 +3,7 @@ const express = require('express'),
       socketIO = require('socket.io'),
       http = require('http')
 
+const {generateMessage} = require('./utils/message')
 /////////////////////////////////////////////////////////////////////////////////
 
 const port = process.env.PORT || 3000
@@ -21,12 +22,12 @@ app.use(express.static(publicPath))
 io.on('connection', (socket) => {
   console.log('New user connected');
 
+  socket.emit('newMessage', generateMessage('Barry', 'Hi'))
+
   socket.on('disconnect', (socket) => {
     console.log('User Disconnected')
   })
 })
-
-
 
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
